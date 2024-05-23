@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using System.Globalization;
+using Microsoft.Maui;
 
 namespace Calculator;
 
@@ -15,14 +17,21 @@ public partial class DecisionPage : ContentPage
     private Dictionary<string, double> variables = new Dictionary<string, double>();
     public DecisionPage(Item item)
 	{
+        
         var formula = item.Value;
 
         var description = string.IsNullOrEmpty(item.Description) ? item.Name : item.Description;
 
         InitializeComponent();
+        //Меняет страну телефона
+        CultureInfo culture = new CultureInfo("en-US");
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+
 
         //Отображаем формулу в Navigation Bar
-		Toolbar.Title = formula;
+        Toolbar.Title = formula;
 
         //Передаём формулу и ищем для неё решение. Также добавляем в списки данные чтобы потом отобразить их
         switch (formula)
