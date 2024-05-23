@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Calculator.Geometry"
+             Title="Геометрия">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Поиск"
+                     IconImageSource="{AppThemeBinding Light='search_light.png', Dark='search_dark.png'}"
+                     Clicked="ToggleSearchBarVisibility" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto, *">
+        <Grid x:Name="SearchBarAndButtonGrid" ColumnDefinitions="*, Auto"
+              IsVisible="false"
+              BackgroundColor="{AppThemeBinding Light=#e0e0e0, Dark=#1c1c1c}">
+            <SearchBar x:Name="SearchBar"
+                       Grid.Column="0"
+                       Placeholder="Поиск формул"
+                       HorizontalOptions="FillAndExpand"
+                       TextChanged="OnSearchBarTextChanged"
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#2d2d2d}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       PlaceholderColor="{AppThemeBinding Light=Gray, Dark=LightGray}" />
+            <Button Grid.Column="1" Text="X" Clicked="ToggleSearchBarVisibility" />
+        </Grid>
+
+        <CollectionView Grid.Row="1"
+                      ItemsSource="{Binding FilteredFormules}"  
+                      SelectionMode="Single"
+                      BackgroundColor="{AppThemeBinding Light=#f2f2f2, Dark=#0a0a0a}"
+                      SelectionChanged="CollectionView_SelectionChanged">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Margin="20,15,20,15" Spacing="5">
+                        <Label Text="{Binding Name}" FontSize="18" TextColor="{AppThemeBinding Dark=white, Light=black}"
+                             FontFamily="medium" Opacity="0.8"/>
+                        <Label Text="{Binding Value}" FontSize="20" TextColor="{AppThemeBinding Dark=white, Light=black}"
+                             FontFamily="semiBold" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
